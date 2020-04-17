@@ -138,8 +138,7 @@ class _FormBuilderImagePickerState extends State<FormBuilderImagePicker> {
                                 builder: (_) {
                                   return ImageSourceSheet(
                                     onImageSelected: (image) {
-                                      state.didChange(
-                                          state.value..add(image.path));
+                                      state.didChange(state.value..add(image));
                                       Navigator.of(context).pop();
                                     },
                                   );
