@@ -16,20 +16,20 @@ class FormBuilderImagePicker extends StatefulWidget {
   final EdgeInsets imageMargin;
   final FormFieldSetter onSaved;
 
-  const FormBuilderImagePicker({
-    Key key,
-    @required this.attribute,
-    this.initialValue,
-    this.validators = const [],
-    this.valueTransformer,
-    this.labelText,
-    this.onChanged,
-    this.imageWidth = 130,
-    this.imageHeight = 130,
-    this.imageMargin,
-    this.readOnly = false,
-    this.onSaved
-  }) : super(key: key);
+  const FormBuilderImagePicker(
+      {Key key,
+      @required this.attribute,
+      this.initialValue,
+      this.validators = const [],
+      this.valueTransformer,
+      this.labelText,
+      this.onChanged,
+      this.imageWidth = 130,
+      this.imageHeight = 130,
+      this.imageMargin,
+      this.readOnly = false,
+      this.onSaved})
+      : super(key: key);
 
   @override
   _FormBuilderImagePickerState createState() => _FormBuilderImagePickerState();
@@ -90,8 +90,9 @@ class _FormBuilderImagePickerState extends State<FormBuilderImagePicker> {
           Text(
             widget.labelText != null ? widget.labelText : 'Images',
             style: TextStyle(
-                color: _readOnly ? Theme.of(context).disabledColor : Theme.of(context).primaryColor
-            ),
+                color: _readOnly
+                    ? Theme.of(context).disabledColor
+                    : Theme.of(context).primaryColor),
           ),
           SizedBox(
             height: 8,
@@ -106,45 +107,53 @@ class _FormBuilderImagePickerState extends State<FormBuilderImagePicker> {
                     height: widget.imageHeight,
                     margin: widget.imageMargin,
                     child: GestureDetector(
-                      child: item is String ?
-                      Image.network(item, fit: BoxFit.cover) :
-                      Image.file(item, fit: BoxFit.cover),
-                      onLongPress: _readOnly ? null : () {
-                        state.didChange(state.value..remove(item));
-                      },
+                      child: item is String
+                          ? Image.network(item, fit: BoxFit.cover)
+                          : Image.file(item, fit: BoxFit.cover),
+                      onLongPress: _readOnly
+                          ? null
+                          : () {
+                              state.didChange(state.value..remove(item));
+                            },
                     ),
                   );
                 }).toList()
-                  ..add(
-                      GestureDetector(
-                        child: Container(
-                          width: widget.imageWidth,
-                          height: widget.imageHeight,
-                          child: Icon(
-                            Icons.camera_enhance,
-                              color: _readOnly ? Theme.of(context).disabledColor : Theme.of(context).primaryColor
-                          ),
-                            color: (_readOnly ? Theme.of(context).disabledColor : Theme.of(context).primaryColor).withAlpha(50)
-                        ),
-                        onTap: _readOnly ? null : () {
-                          showModalBottomSheet(context: context, builder: (_) {
-                            return ImageSourceSheet(
-                              onImageSelected: (image) {
-                                state.didChange(state.value..add(image));
-                                Navigator.of(context).pop();
-                              },
-                            );
-                          });
-                        },
-                      )
-                  )
-            ),
+                  ..add(GestureDetector(
+                    child: Container(
+                        width: widget.imageWidth,
+                        height: widget.imageHeight,
+                        child: Icon(Icons.camera_enhance,
+                            color: _readOnly
+                                ? Theme.of(context).disabledColor
+                                : Theme.of(context).primaryColor),
+                        color: (_readOnly
+                                ? Theme.of(context).disabledColor
+                                : Theme.of(context).primaryColor)
+                            .withAlpha(50)),
+                    onTap: _readOnly
+                        ? null
+                        : () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (_) {
+                                  return ImageSourceSheet(
+                                    onImageSelected: (image) {
+                                      state.didChange(
+                                          state.value..add(image.path));
+                                      Navigator.of(context).pop();
+                                    },
+                                  );
+                                });
+                          },
+                  ))),
           ),
           state.hasError
               ? Text(
-            state.errorText,
-            style: TextStyle(color: Theme.of(context).errorColor, fontSize: 12),
-          ) : Container()
+                  state.errorText,
+                  style: TextStyle(
+                      color: Theme.of(context).errorColor, fontSize: 12),
+                )
+              : Container()
         ],
       ),
     );
