@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_form_builder/src/widgets/image_source_sheet.dart';
+import 'dart:io';
 
 class FormBuilderImagePicker extends StatefulWidget {
   final String attribute;
