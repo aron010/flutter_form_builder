@@ -108,8 +108,8 @@ class _FormBuilderImagePickerState extends State<FormBuilderImagePicker> {
                     margin: widget.imageMargin,
                     child: GestureDetector(
                       child: item is String
-                          ? Image.network(item, fit: BoxFit.cover)
-                          : Image.file(item, fit: BoxFit.cover),
+                          ? Image.network(File(item), fit: BoxFit.cover)
+                          : Image.file(File(item), fit: BoxFit.cover),
                       onLongPress: _readOnly
                           ? null
                           : () {
